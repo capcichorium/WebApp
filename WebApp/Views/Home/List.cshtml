@@ -1,0 +1,13 @@
+﻿
+@model IEnumerable<WebApp.Models.Order>
+
+@{
+    ViewBag.Title = "Все заказы";
+}
+<table class="table">
+    <tr><td>Номер заказа</td><td>Город отправителя</td><td>Адрес отправителя</td><td>Город получателя</td><td>Адрес получателя</td><td>Вес груза</td><td>Дата забора груза</td></tr>
+    @foreach (var item in Model)
+    {
+        <tr><td>@item.Id</td><td>@item.sendersCity</td><td>@item.sendersAdress</td><td>@item.recipientsCity</td><td>@item.sendersAdress</td><td>@item.Weight</td><td>@item.arrivalDate</td></tr>
+    }
+</table>

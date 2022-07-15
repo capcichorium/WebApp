@@ -3,13 +3,16 @@ using Microsoft.EntityFrameworkCore;
 
 public class ApplicationContext : DbContext
 {
-    public DbSet<Order> Orders{ get; set; }
-    public ApplicationContext()
+    public DbSet<Order> Orders { get; set; }
+
+    public ApplicationContext(DbContextOptions<ApplicationContext> options)
+        : base(options)
     {
-        Database.EnsureCreated();
+        //Database.EnsureDeleted();
+        //Database.EnsureCreated();
     }
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        optionsBuilder.UseSqlServer(@"Server=(localdb)\webapi;Database=webapi;Trusted_Connection=True;");
+        base.OnModelCreating(modelBuilder);
     }
 }

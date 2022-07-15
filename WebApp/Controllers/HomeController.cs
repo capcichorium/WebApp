@@ -12,10 +12,12 @@ namespace WebApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private ApplicationContext db;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ApplicationContext context)
         {
             _logger = logger;
+            db = context;
         }
 
         public IActionResult Index()
@@ -23,10 +25,21 @@ namespace WebApp.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        [HttpPost]
+        public async Task<IActionResult> Create(Order order)
         {
-            return View();
+            db.Orders.Add(order);
+            await db.SaveChangesAsync();
+            return RedirectToAction("List");
         }
+
+
+        public async Task<IActionResult> List()
+        {
+            var orders = db.Orders;
+            return View(orders);
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
